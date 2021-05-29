@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8D1D602A2662387C00FC45DE /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D1D60292662387C00FC45DE /* Constants.m */; };
+		8D1D602D266275DC00FC45DE /* NewDocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D1D602C266275DC00FC45DE /* NewDocumentViewController.m */; };
 		8D7E38D4265FCC4900F6AC1C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7E38D3265FCC4900F6AC1C /* AppDelegate.m */; };
 		8D7E38D7265FCC4900F6AC1C /* DocumentBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7E38D6265FCC4900F6AC1C /* DocumentBrowserViewController.m */; };
 		8D7E38DA265FCC4900F6AC1C /* DocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7E38D9265FCC4900F6AC1C /* DocumentViewController.m */; };
@@ -23,6 +24,8 @@
 /* Begin PBXFileReference section */
 		8D1D60282662387C00FC45DE /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		8D1D60292662387C00FC45DE /* Constants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		8D1D602B266275DC00FC45DE /* NewDocumentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewDocumentViewController.h; sourceTree = "<group>"; };
+		8D1D602C266275DC00FC45DE /* NewDocumentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewDocumentViewController.m; sourceTree = "<group>"; };
 		8D7E38CF265FCC4900F6AC1C /* MultiWindowDocTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultiWindowDocTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D7E38D2265FCC4900F6AC1C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8D7E38D3265FCC4900F6AC1C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -94,6 +97,8 @@
 				8D7E38E1265FCC4F00F6AC1C /* Assets.xcassets */,
 				8D1D60282662387C00FC45DE /* Constants.h */,
 				8D1D60292662387C00FC45DE /* Constants.m */,
+				8D1D602B266275DC00FC45DE /* NewDocumentViewController.h */,
+				8D1D602C266275DC00FC45DE /* NewDocumentViewController.m */,
 			);
 			path = MultiWindowDocTest;
 			sourceTree = "<group>";
@@ -172,6 +177,7 @@
 				8D7E38DD265FCC4900F6AC1C /* Document.m in Sources */,
 				8D1D602A2662387C00FC45DE /* Constants.m in Sources */,
 				8D7E38D7265FCC4900F6AC1C /* DocumentBrowserViewController.m in Sources */,
+				8D1D602D266275DC00FC45DE /* NewDocumentViewController.m in Sources */,
 				8D7E393E26603C1C00F6AC1C /* RecentDocumentHandler.m in Sources */,
 				8D7E38DA265FCC4900F6AC1C /* DocumentViewController.m in Sources */,
 				8D7E38D4265FCC4900F6AC1C /* AppDelegate.m in Sources */,

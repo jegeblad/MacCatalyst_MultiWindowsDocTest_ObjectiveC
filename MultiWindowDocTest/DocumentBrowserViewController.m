@@ -8,6 +8,7 @@
 #import "DocumentBrowserViewController.h"
 #import "Document.h"
 #import "DocumentViewController.h"
+#import "NewDocumentViewController.h"
 #import "RecentDocumentHandler.h"
 #import "Constants.h"
 
@@ -177,14 +178,25 @@ static __weak UIWindowScene* activeOnScene = nil; // Keep track of which scene h
 
 - (void)documentBrowser:(UIDocumentBrowserViewController *)controller didRequestDocumentCreationWithHandler:(void (^)(NSURL * _Nullable, UIDocumentBrowserImportMode))importHandler
 {
-    NSURL *newDocumentURL = nil;
-    // Set the URL for the new document here. Optionally, you can present a template chooser before calling the importHandler.
-    // Make sure the importHandler is always called, even if the user cancels the creation request.
-    if (newDocumentURL != nil) {
-        importHandler(newDocumentURL, UIDocumentBrowserImportModeMove);
-    } else {
-        importHandler(newDocumentURL, UIDocumentBrowserImportModeNone);
-    }
+	UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+	NewDocumentViewController * newDocVC = [storyBoard instantiateViewControllerWithIdentifier:@"NewDocumentViewController"];
+	newDocVC.modalPresentationStyle = UIModalPresentationFormSheet;
+	newDocVC.completionBlock = ^(NSURL * dummyURL, BOOL success)
+	{
+		if (success)
+		{
+			importHandler(dummyURL, UIDocumentBrowserImportModeMove);
+		}
+		else
+		{
+			// cancelled
+			importHandler(dummyURL, UIDocumentBrowserImportModeNone);
+		}
+	};
+
+	[self removeArtificialSizeRestrictions];
+	[self presentViewController:newDocVC animated:YES completion:nil];
+	
 }
 
 
