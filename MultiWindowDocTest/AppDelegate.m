@@ -155,7 +155,7 @@
 }
 
 
--(void) requestDocBrowserScene
+-(void) requestNewDocBrowserScene
 {
 	static int counter = 0;
 	NSUserActivity * userActivity = [[NSUserActivity alloc] initWithActivityType:[NSString stringWithFormat:@"com.mexircus.test%d", counter++]];
@@ -171,70 +171,28 @@
 {
 	if (false)
 	{
-		[self requestDocBrowserScene];
+		// Create new a scene -- This doesn't pop the Browser controller to the top
+		[self requestNewDocBrowserScene];
 		return;
 	}
-	// Ideally we would just activate the sccene, but that doesn't seem to  pop the doc-browser to the front
-	// So instead I'll kill it and open a new one once killed.
-#if 1
-	UIWindowScene * currentActive = [DocumentBrowserViewController activeScene];
-	if (true)
-	{
-		if (currentActive && currentActive.session)
-		{
-			UIViewController * vc = [[UIViewController alloc] init];
-			[[currentActive.windows objectAtIndex:0].rootViewController presentViewController:vc animated:NO completion:
-			 ^(){
-				[[UIApplication sharedApplication] requestSceneSessionActivation:currentActive.session userActivity:nil options:nil errorHandler:nil];
-				[vc dismissViewControllerAnimated:NO completion:nil];
-			}];
-		}
-		else
-		{
-			[self performSelector:@selector(requestDocBrowserScene) withObject:nil afterDelay:0.5];
-		}
-	}
-		
 	
- return;
-
+	// Ideally we would just activate the sccene, but that doesn't seem to  pop the doc-browser to the front
+	// So instead I tried to kill it and open a new one once killed, however
+	// that seems to break it
+	UIWindowScene * currentActive = [DocumentBrowserViewController activeScene];
 	if (currentActive && currentActive.session)
 	{
-		[[currentActive.windows objectAtIndex:0].rootViewController presentViewController:[[UIViewController alloc] init] animated:NO completion:
+		UIViewController * vc = [[UIViewController alloc] init];
+		[[currentActive.windows objectAtIndex:0].rootViewController presentViewController:vc animated:NO completion:
 		 ^(){
-			[[UIApplication sharedApplication] requestSceneSessionDestruction:currentActive.session options:nil errorHandler:nil];
-			[self performSelector:@selector(requestDocBrowserScene) withObject:nil afterDelay:0.5];
+			[[UIApplication sharedApplication] requestSceneSessionActivation:currentActive.session userActivity:nil options:nil errorHandler:nil];
+			[vc dismissViewControllerAnimated:NO completion:nil];
 		}];
-//		[currentActive.windows objectAtIndex:0].rootViewController = [[UIViewController alloc] init];
-//	[currentDocBrowser dismissViewControllerAnimated:NO completion:nil];
-
-//		NSLog(@"Destroying scene %@ %@", currentActive, currentActive.session);
-//		[[UIApplication sharedApplication] requestSceneSessionDestruction:currentActive.session
-//																  options:nil errorHandler:nil];
-//		[DocumentBrowserViewController setActiveScene:nil];
 	}
 	else
 	{
-		// Request new scene after 0.5 sec.
-		[self performSelector:@selector(requestDocBrowserScene) withObject:nil afterDelay:0.5];
+		[self requestNewDocBrowserScene];
 	}
-#else
-	UIWindowScene * currentActive = [DocumentBrowserViewController activeScene];
-	if (currentActive)
-	{
-		NSLog(@"Current active");
-		DocumentBrowserViewController * currentDocBrowser = (DocumentBrowserViewController*)[currentActive.windows objectAtIndex:0].rootViewController;
-		currentDocBrowser.delegate = nil;
-		UIWindow * window = [currentActive.windows objectAtIndex:0];
-		window.rootViewController = [[DocumentBrowserViewController alloc] init];
-		[currentDocBrowser dismissViewControllerAnimated:NO completion:nil];
-	}
-	else
-	{
-		NSLog(@"Not current active");
-		[self requestDocBrowserScene];
-	}
-#endif
 }
 
 
