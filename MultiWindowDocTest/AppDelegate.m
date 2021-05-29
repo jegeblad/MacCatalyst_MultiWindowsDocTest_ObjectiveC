@@ -165,6 +165,7 @@
 -(IBAction) onOpenDocument
 {
 #if 0
+	// This is what I would think should work... 
 	if (false)
 	{
 		// Create new a scene -- This doesn't pop the Browser controller to the top

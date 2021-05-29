@@ -11,14 +11,15 @@
 #import "RecentDocumentHandler.h"
 #import "Constants.h"
 
+static __weak UIWindowScene* activeOnScene = nil; // Keep track of which scene holds a visible DocumentBrowserController. That way, we can reactivate this scene when the user clicks "Open ..."
+
+
 @interface DocumentBrowserViewController () <UIDocumentBrowserViewControllerDelegate>
 {
-	__weak DocumentViewController * visibleDocVC;
+	__weak DocumentViewController * visibleDocVC; // <- Keep track of the visible document VC, so that we can drop it on clean up
 }
 
 @end
-
-static __weak UIWindowScene* activeOnScene = nil;
 
 
 @implementation DocumentBrowserViewController

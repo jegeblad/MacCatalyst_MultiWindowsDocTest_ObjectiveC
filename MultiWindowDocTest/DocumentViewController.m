@@ -135,10 +135,20 @@
 }
 
 
-- (IBAction)dismissDocumentViewController {
-    [self dismissViewControllerAnimated:YES completion:^ {
-        [self.document closeWithCompletionHandler:nil];
-    }];
+- (IBAction)dismissDocumentViewController
+{
+	if (self.view.window.rootViewController == self)
+	{
+		// If this is the root view controller kill the session:
+		[[UIApplication sharedApplication] requestSceneSessionDestruction:self.view.window.windowScene.session options:nil errorHandler:nil];
+	}
+	else
+	{
+		// Pop to file browser
+		[self dismissViewControllerAnimated:YES completion:^ {
+			[self.document closeWithCompletionHandler:nil];
+		}];
+	}
 }
 
 
@@ -157,7 +167,6 @@
 	userActivity.userInfo = @{@"url":self.document.fileURL};
 	userActivity.targetContentIdentifier = [NSString stringWithFormat:@"unique:%@", [self.document.fileURL path]];
 	self.view.window.windowScene.userActivity = userActivity;
-	NSLog(@"Viewer Setting activity: %@", self.view.window.windowScene.userActivity.activityType);
 }
 
 

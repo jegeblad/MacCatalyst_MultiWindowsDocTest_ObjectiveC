@@ -134,6 +134,20 @@ I implemented a "cache" of bookmarked URLs in **RecentDocumentHandler** that use
 The recent menu is filled up with anything being opened by a UIDocument. This isn't ideal, because we may use UIDocument to 
 access items that are not supposed to be visible in the recent menu (as UIDocument handles file coordination).
 
+##### • Recent Menu - Part 3
+I had issues using the **revealDocumentAtURL:importIfNeeded** method of the DocumentBrowser. It seems, that
+if you use that, and present a new document on it, then the next time you request a scene with a DocumentBrowser, you
+replace the current scene. 
+
+So if you open a recent document, then "Open..." a file through the document browser normally, the recent file scene
+gets replaced with the file you open. So it is as if the "Open..." reactivates the scene with the DocumentBrowser.
+
+To fix this, we can actually skip the document browser when we open a recent document. 
+
+See MySceneDelegate.presentDocumentURLDirectly:onWindow:inScene:
+
+
+
 ##### • Reactivating the Document Browser
 When the user clicks on "Open ...", it would be ideal if the document browser pops to the top of the visible windows. Reactivating the scene 
 like this: 
