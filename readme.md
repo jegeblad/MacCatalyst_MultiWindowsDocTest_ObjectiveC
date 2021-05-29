@@ -178,3 +178,14 @@ it pop to the front of the visible windows:
     }
 
 In generally, lots of things break surrounding document browser. In general, dstoying a session where the document browser is visible seem to break the document browser the next time it is presented.
+
+##### • New Document
+
+Not sure how Apple wants this work. If you click the "New document" button in the **DocumentBrowser** I can show a kind of document create/template view -- I show one with "Go!" and "Cancel". 
+Then to create the document, I guess we have to create a tempoary file, and have the DocumentBrowser's importhandler move it into the folder being displayed. That's great, but there isn't really a good place to
+give the file a name in this flow. So I just named it "untitled" for now.
+
+I have added a "New Document" item in the file menu also. This presents the template handler immediately on the **DocumentBrowser**. When you click "Go!" I use the DocumentBrowsers' **revealDocumentAtURL:importIfNeeded:completion** 
+method. This will show a filename dialog, which is great. But if you use the name of an existing file, you are given the option to "Replace". However, replace doesn't work. Instead we are given an error, that the file cannot
+be imported... Sigh!
+
