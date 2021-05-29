@@ -6,6 +6,7 @@
 //
 
 #import "DocumentViewController.h"
+#import "Constants.h"
 
 @interface NSWeakWrapper : NSObject
 @property (weak) NSObject * wrappedObject;
@@ -116,12 +117,10 @@
 
 @interface DocumentViewController()
 @property IBOutlet UILabel *documentNameLabel;
-
-
-
 @end
 
 @implementation DocumentViewController
+
 
     
 - (void)viewWillAppear:(BOOL)animated
@@ -133,11 +132,6 @@
 -(void) viewDidDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:animated];
-}
-
--(void) dealloc
-{
-	NSLog(@"DocVC deallc");
 }
 
 
@@ -152,17 +146,18 @@
 {
 	[super viewDidAppear:animated];
 	self.documentNameLabel.text = self.document.fileURL.lastPathComponent;
-	
 	self.view.window.windowScene.title = self.documentNameLabel.text;
 	self.view.window.windowScene.titlebar.representedURL = self.document.fileURL;
-	
+
 	[[DocumentViewControllerManager sharedManager] addDocumentVC:self];
-	
-	NSUserActivity * userActivity = [[NSUserActivity alloc] initWithActivityType:@"com.mexircus.docview"];
+
+	// Set the user activity
+	NSUserActivity * userActivity = [[NSUserActivity alloc] initWithActivityType:[Constants userActivityTypeDocumentView]];
 	userActivity.title =   self.document.fileURL.lastPathComponent;
 	userActivity.userInfo = @{@"url":self.document.fileURL};
+	userActivity.targetContentIdentifier = [NSString stringWithFormat:@"unique:%@", [self.document.fileURL path]];
 	self.view.window.windowScene.userActivity = userActivity;
-	NSLog(@"View did appear");
+	NSLog(@"Viewer Setting activity: %@", self.view.window.windowScene.userActivity.activityType);
 }
 
 

@@ -11,7 +11,6 @@ static NSInteger kRecentMaxCount = 12;
 static NSString * kRecentKey = @"recents";
 static NSString * bookmarkedURLSKey = @"bookmarkedurls";
 
-
 @implementation RecentDocumentHandler
 
 

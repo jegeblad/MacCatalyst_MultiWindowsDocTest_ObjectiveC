@@ -44,6 +44,7 @@
 	<array>
 		<string>com.mexircus.docview</string>
 		<string>com.mexircus.docbrowser</string>
+		<string>com.mexircus.openrecentdoc</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

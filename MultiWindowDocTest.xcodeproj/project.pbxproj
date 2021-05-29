@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D1D602A2662387C00FC45DE /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D1D60292662387C00FC45DE /* Constants.m */; };
 		8D7E38D4265FCC4900F6AC1C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7E38D3265FCC4900F6AC1C /* AppDelegate.m */; };
 		8D7E38D7265FCC4900F6AC1C /* DocumentBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7E38D6265FCC4900F6AC1C /* DocumentBrowserViewController.m */; };
 		8D7E38DA265FCC4900F6AC1C /* DocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7E38D9265FCC4900F6AC1C /* DocumentViewController.m */; };
@@ -20,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8D1D60282662387C00FC45DE /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		8D1D60292662387C00FC45DE /* Constants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		8D7E38CF265FCC4900F6AC1C /* MultiWindowDocTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultiWindowDocTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D7E38D2265FCC4900F6AC1C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8D7E38D3265FCC4900F6AC1C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -71,24 +74,26 @@
 		8D7E38D1265FCC4900F6AC1C /* MultiWindowDocTest */ = {
 			isa = PBXGroup;
 			children = (
+				8D7E38E6265FCC4F00F6AC1C /* Info.plist */,
 				8D7E38EF265FCE0200F6AC1C /* MultiWindowDocTest.entitlements */,
-				8D7E393C26603C1C00F6AC1C /* RecentDocumentHandler.h */,
-				8D7E393D26603C1C00F6AC1C /* RecentDocumentHandler.m */,
+				8D7E38E7265FCC4F00F6AC1C /* main.m */,
 				8D7E38D2265FCC4900F6AC1C /* AppDelegate.h */,
 				8D7E38D3265FCC4900F6AC1C /* AppDelegate.m */,
+				8D7E38F1265FCEE400F6AC1C /* MySceneDelegate.h */,
+				8D7E38F2265FCEE400F6AC1C /* MySceneDelegate.m */,
 				8D7E38D5265FCC4900F6AC1C /* DocumentBrowserViewController.h */,
 				8D7E38D6265FCC4900F6AC1C /* DocumentBrowserViewController.m */,
 				8D7E38D8265FCC4900F6AC1C /* DocumentViewController.h */,
 				8D7E38D9265FCC4900F6AC1C /* DocumentViewController.m */,
 				8D7E38DB265FCC4900F6AC1C /* Document.h */,
 				8D7E38DC265FCC4900F6AC1C /* Document.m */,
+				8D7E393C26603C1C00F6AC1C /* RecentDocumentHandler.h */,
+				8D7E393D26603C1C00F6AC1C /* RecentDocumentHandler.m */,
 				8D7E38DE265FCC4900F6AC1C /* Main.storyboard */,
-				8D7E38E1265FCC4F00F6AC1C /* Assets.xcassets */,
 				8D7E38E3265FCC4F00F6AC1C /* LaunchScreen.storyboard */,
-				8D7E38E6265FCC4F00F6AC1C /* Info.plist */,
-				8D7E38E7265FCC4F00F6AC1C /* main.m */,
-				8D7E38F1265FCEE400F6AC1C /* MySceneDelegate.h */,
-				8D7E38F2265FCEE400F6AC1C /* MySceneDelegate.m */,
+				8D7E38E1265FCC4F00F6AC1C /* Assets.xcassets */,
+				8D1D60282662387C00FC45DE /* Constants.h */,
+				8D1D60292662387C00FC45DE /* Constants.m */,
 			);
 			path = MultiWindowDocTest;
 			sourceTree = "<group>";
@@ -165,6 +170,7 @@
 				8D7E38E8265FCC4F00F6AC1C /* main.m in Sources */,
 				8D7E38F3265FCEE400F6AC1C /* MySceneDelegate.m in Sources */,
 				8D7E38DD265FCC4900F6AC1C /* Document.m in Sources */,
+				8D1D602A2662387C00FC45DE /* Constants.m in Sources */,
 				8D7E38D7265FCC4900F6AC1C /* DocumentBrowserViewController.m in Sources */,
 				8D7E393E26603C1C00F6AC1C /* RecentDocumentHandler.m in Sources */,
 				8D7E38DA265FCC4900F6AC1C /* DocumentViewController.m in Sources */,

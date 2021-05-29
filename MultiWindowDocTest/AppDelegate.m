@@ -11,15 +11,15 @@
 #import "Document.h"
 #import "MySceneDelegate.h"
 #import "RecentDocumentHandler.h"
+#import "Constants.h"
 
 @interface AppDelegate ()
-{
-}
+{}
 
 @end
 
-@implementation AppDelegate
 
+@implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -56,10 +56,6 @@
 }
 
 
-- (void)application:(UIApplication *)application didDiscardSceneSessions:(NSSet<UISceneSession *> *)sceneSessions
-{
-	NSLog(@"Did discard sessions");
-}
 
 // ------------------------------------------------------------------------
 // Menu stuff
@@ -68,7 +64,7 @@
 
 -(IBAction) onOpenRecentDocument:(UICommand*) sender
 {
-	NSData * urldata = sender.propertyList[@"urldata"];
+	NSData * urldata = sender.propertyList[[Constants keyURLData]];
 	if (urldata)
 	{
 		// Check if document already open
@@ -78,8 +74,8 @@
 			return;
 		}
 		
-		NSUserActivity * userActivity = [[NSUserActivity alloc] initWithActivityType:@"com.mexircus.openrecentdoc"];
-		userActivity.userInfo = @{@"urldata":urldata};
+		NSUserActivity * userActivity = [[NSUserActivity alloc] initWithActivityType:[Constants userActivityTypeOpenRecentDocument]];
+		userActivity.userInfo = @{[Constants keyURLData]:urldata};
 		[[UIApplication sharedApplication] requestSceneSessionActivation:nil
 															userActivity:userActivity options:nil errorHandler:^(NSError * _Nonnull error)
 		{
@@ -110,7 +106,7 @@
 			if (url)
 			{
 				NSString * title = [[url path] lastPathComponent];
-				UICommand * newCommand = [UICommand commandWithTitle:title image:nil action:@selector(onOpenRecentDocument:) propertyList:@{@"urldata":data}];
+				UICommand * newCommand = [UICommand commandWithTitle:title image:nil action:@selector(onOpenRecentDocument:) propertyList:@{[Constants keyURLData]:data}];
 				[children addObject:newCommand];
 			}
 		}
@@ -131,7 +127,7 @@
 	[super buildMenuWithBuilder:builder];
 	// File menu
 	[builder removeMenuForIdentifier:UIMenuNewScene];
-	[builder removeMenuForIdentifier:UIMenuOpenRecent]; // <- remove Apple's recent menu
+	[builder removeMenuForIdentifier:UIMenuOpenRecent]; // <- remove Apple's recent menu -- If you want to use this, then you probably should use the "cache" of RecentDocumentHandler
 	
 	UIKeyCommand * newDocumentMenuItem = [UIKeyCommand commandWithTitle:@"New Document" image:nil action:@selector(onNewDocument) input:@"n" modifierFlags:UIKeyModifierCommand propertyList:nil];
 	UIMenu * newItem = [UIMenu menuWithTitle:@"New Document" image:nil identifier:UIMenuNewScene options:UIMenuOptionsDisplayInline children:@[
@@ -157,28 +153,30 @@
 
 -(void) requestNewDocBrowserScene
 {
-	static int counter = 0;
-	NSUserActivity * userActivity = [[NSUserActivity alloc] initWithActivityType:[NSString stringWithFormat:@"com.mexircus.test%d", counter++]];
+	NSUserActivity * userActivity = [[NSUserActivity alloc] initWithActivityType:[Constants userActivityTypeDocumentBrowser]];
 	[[UIApplication sharedApplication] requestSceneSessionActivation:nil
 														userActivity:userActivity options:nil errorHandler:^(NSError * _Nonnull error)
 	{
-
+		NSLog(@"Error requesting new browser scene: %@", [error description]);
 	}];
 }
 
 
 -(IBAction) onOpenDocument
 {
+#if 0
 	if (false)
 	{
 		// Create new a scene -- This doesn't pop the Browser controller to the top
 		[self requestNewDocBrowserScene];
 		return;
 	}
+#endif
 	
 	// Ideally we would just activate the sccene, but that doesn't seem to  pop the doc-browser to the front
-	// So instead I tried to kill it and open a new one once killed, however
-	// that seems to break it
+	// So instead I tried to kill it and open a new one once killed, however that seems to break it
+	// What seem to work best is to present a dummy view controller then activate the scene, and then
+	// dismiss the dummy view controller
 	UIWindowScene * currentActive = [DocumentBrowserViewController activeScene];
 	if (currentActive && currentActive.session)
 	{
@@ -208,16 +206,13 @@
 	}
 	if (aSelector==@selector(onClearRecentList:))
 	{
+		// show dimmed
 		return [[RecentDocumentHandler sharedHandler] recentURLs]!=nil; // will return nil if count == 0
 	}
 	
 	return [super respondsToSelector:aSelector];
 }
 
-
-// ------------------------------------------------------------------------
-// Scene stuff
-//
 
 
 @end
