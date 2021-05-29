@@ -18,12 +18,25 @@ static __weak UIWindowScene* activeOnScene = nil; // Keep track of which scene h
 @interface DocumentBrowserViewController () <UIDocumentBrowserViewControllerDelegate>
 {
 	__weak DocumentViewController * visibleDocVC; // <- Keep track of the visible document VC, so that we can drop it on clean up
+	BOOL ignoreImportError;
 }
 
 @end
 
 
 @implementation DocumentBrowserViewController
+
+-(id) initForOpeningContentTypes:(nullable NSArray<UTType*> *) contentTypes
+{
+	self = [super initForOpeningContentTypes:contentTypes];
+	if (self)
+	{
+		self.createNewDocumentOnAppear = NO;
+		ignoreImportError = NO;
+	}
+	
+	return self;
+}
 
 
 +(UIWindowScene*) activeScene
@@ -59,6 +72,11 @@ static __weak UIWindowScene* activeOnScene = nil; // Keep track of which scene h
 	userActivity.userInfo = @{@"browser" : @"browser"}; // <- This isn't really needed or used for anything
 	
 	self.view.window.windowScene.userActivity = userActivity;
+	if (self.createNewDocumentOnAppear)
+	{
+		[self createNewDocumentDirect];
+		self.createNewDocumentOnAppear = NO;
+	}
 }
 
 
@@ -124,6 +142,52 @@ static __weak UIWindowScene* activeOnScene = nil; // Keep track of which scene h
 	}];
 }
 
+
+-(void)revealAndImport:(NSURL*) dummyURL
+{
+	// These seems to force a enter filename dialog
+	ignoreImportError = YES; // Don't show multiple alerts
+	[self revealDocumentAtURL:dummyURL importIfNeeded:YES completion:^(NSURL * _Nullable revealedDocumentURL, NSError * _Nullable error) {
+		self->ignoreImportError = NO;
+		if (error) {
+			// Handle the error appropriately
+			[self revealAndImport:dummyURL];
+			UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"Unable to use that filename"
+												message:[NSString stringWithFormat:@"Please enter a different filename"]
+										 preferredStyle:UIAlertControllerStyleAlert];
+			[alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action)
+			{
+				// When the user clicks OK -> Destroy this scene session to close the window.
+		//		[[UIApplication sharedApplication] requestSceneSessionDestruction:scene.session options:nil errorHandler:nil];
+			}]];
+			[self presentViewController:alertController animated:YES completion:nil];
+			return;
+		}
+		[self presentDocumentAtURL:revealedDocumentURL];
+	}];
+}
+
+
+- (void)createNewDocumentDirect
+{
+	UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+	NewDocumentViewController * newDocVC = [storyBoard instantiateViewControllerWithIdentifier:@"NewDocumentViewController"];
+	newDocVC.modalPresentationStyle = UIModalPresentationFormSheet;
+	newDocVC.completionBlock = ^(NSURL * dummyURL, BOOL success)
+	{
+		if (success)
+		{
+			[self revealAndImport:dummyURL];
+		}
+		else
+		{
+			// cancelled
+		}
+	};
+
+	[self removeArtificialSizeRestrictions];
+	[self presentViewController:newDocVC animated:YES completion:nil];
+}
 
 
 - (void)tryToRevealAndOpenDocumentAtURL:(NSURL *)documentURL
@@ -224,7 +288,20 @@ static __weak UIWindowScene* activeOnScene = nil; // Keep track of which scene h
 
 - (void)documentBrowser:(UIDocumentBrowserViewController *)controller failedToImportDocumentAtURL:(NSURL *)documentURL error:(NSError * _Nullable)error
 {
-	NSLog(@"Failed to import document: %@", [error description]);
+	if (ignoreImportError)
+	{
+		return;
+	}
+	// We don't know what the error is here so just display something generic and unhelpful as "try again later....".
+	UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"Unable to open document"
+										message:[NSString stringWithFormat:@"Unable to open document at %@:\n\n%@", [documentURL path], [error description]]
+								 preferredStyle:UIAlertControllerStyleAlert];
+	[alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action)
+	{
+		// When the user clicks OK -> Destroy this scene session to close the window.
+//		[[UIApplication sharedApplication] requestSceneSessionDestruction:scene.session options:nil errorHandler:nil];
+	}]];
+	[self presentViewController:alertController animated:YES completion:nil];
 }
 
 

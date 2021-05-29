@@ -9,6 +9,8 @@
 
 @interface DocumentBrowserViewController : UIDocumentBrowserViewController
 
+@property BOOL createNewDocumentOnAppear;
+
 - (void)presentDocumentAtURL:(NSURL *)documentURL;
 - (void)tryToRevealAndOpenDocumentAtURL:(NSURL *)documentURL;
 
@@ -16,5 +18,6 @@
 +(void) setActiveScene:(UIWindowScene*) scene;
 
 -(void) cleanUp;
+-(void) createNewDocumentDirect;
 
 @end

@@ -85,17 +85,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sEE-vg-MCd">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sEE-vg-MCd">
                                 <rect key="frame" x="154" y="94" width="48" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Cancel"/>
                                 <connections>
                                     <action selector="onCancel" destination="NJn-Jj-A6D" eventType="touchUpInside" id="vgP-Zq-qzm"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yVS-0O-Lec">
-                                <rect key="frame" x="161" y="279" width="37" height="41"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yVS-0O-Lec">
+                                <rect key="frame" x="161" y="486" width="37" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Go!"/>
                                 <connections>
@@ -105,6 +103,14 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gcA-sF-fdh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="gcA-sF-fdh" firstAttribute="trailing" secondItem="yVS-0O-Lec" secondAttribute="trailing" constant="177" id="4vq-K5-DKd"/>
+                            <constraint firstItem="yVS-0O-Lec" firstAttribute="leading" secondItem="gcA-sF-fdh" secondAttribute="leading" constant="161" id="P7H-TR-lX7"/>
+                            <constraint firstItem="gcA-sF-fdh" firstAttribute="trailing" secondItem="sEE-vg-MCd" secondAttribute="trailing" constant="173" id="fQw-Jg-ofw"/>
+                            <constraint firstItem="sEE-vg-MCd" firstAttribute="leading" secondItem="gcA-sF-fdh" secondAttribute="leading" constant="154" id="rIC-hc-mkZ"/>
+                            <constraint firstItem="gcA-sF-fdh" firstAttribute="bottom" secondItem="yVS-0O-Lec" secondAttribute="bottom" constant="140" id="rUI-jm-leo"/>
+                            <constraint firstItem="sEE-vg-MCd" firstAttribute="top" secondItem="gcA-sF-fdh" secondAttribute="top" constant="94" id="sDe-aJ-Mu2"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d7E-HI-ew0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

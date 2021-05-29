@@ -147,7 +147,22 @@
 
 -(IBAction) onNewDocument
 {
-	
+	// If we have an active scene, reuse it. Otherwise, create one with new document user activity.
+	UIWindowScene * currentActive = [DocumentBrowserViewController activeScene];
+	if (currentActive && currentActive.session)
+	{
+		DocumentBrowserViewController * docBrowser = (DocumentBrowserViewController *)[currentActive.windows objectAtIndex:0].rootViewController;
+		[docBrowser createNewDocumentDirect];
+	}
+	else
+	{
+		NSUserActivity * userActivity = [[NSUserActivity alloc] initWithActivityType:[Constants userActivityTypeNewDocument]];
+		[[UIApplication sharedApplication] requestSceneSessionActivation:nil
+															userActivity:userActivity options:nil errorHandler:^(NSError * _Nonnull error)
+		{
+			NSLog(@"Error requesting new browser scene: %@", [error description]);
+		}];
+	}
 }
 
 

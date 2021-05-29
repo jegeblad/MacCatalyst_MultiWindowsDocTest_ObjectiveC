@@ -38,6 +38,14 @@
 		[self presentDocumentURLDirectly:url onWindow:window inScene:scene];
 		return;
 	}
+	if ([userActivity.activityType isEqual:[Constants userActivityTypeNewDocument]])
+	{
+		DocumentBrowserViewController * docBrowser = [[DocumentBrowserViewController alloc] initForOpeningContentTypes:@[ [UTType typeWithIdentifier:@"public.plain-text"] ] ];
+		window.rootViewController = docBrowser;
+		scene.userActivity = userActivity;
+		docBrowser.createNewDocumentOnAppear = YES;
+		return;
+	}
 
 	// Replace the document browser controller here, if you want
 	// The default one just uses the Info.plist to determine the UTTypes, so here we can customize it a bit

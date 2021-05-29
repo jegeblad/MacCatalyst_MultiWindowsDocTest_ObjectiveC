@@ -8,6 +8,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(NSString*) userActivityTypeDocumentView;
 +(NSString*) userActivityTypeOpenRecentDocument;
 +(NSString*) userActivityTypeDocumentBrowser;
++(NSString*) userActivityTypeNewDocument;
 
 +(NSString*) keyURLData;
 

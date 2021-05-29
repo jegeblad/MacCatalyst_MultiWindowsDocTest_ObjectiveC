@@ -20,6 +20,14 @@
 	return @"com.mexircus.docbrowser";
 }
 
+
+
++(NSString*) userActivityTypeNewDocument
+{
+	return @"com.mexircus.opennewdoc";
+}
+
+
 +(NSString*) keyURLData
 {
 	return @"urldata";
