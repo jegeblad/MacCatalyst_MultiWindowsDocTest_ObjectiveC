@@ -103,7 +103,7 @@ static __weak UIWindowScene* activeOnScene = nil;
 	{
 		if (success)
 		{
-			 [[RecentDocumentHandler sharedHandler] addBookmarkedURLForURL:documentURL]; // <- If using Apple's recent menu, it seems I need to cache the scoped bookmark document URL myself
+			//[[RecentDocumentHandler sharedHandler] addBookmarkedURLForURL:documentURL]; // <- If using Apple's recent menu, it seems I need to cache the scoped bookmark document URL myself
 			[[RecentDocumentHandler sharedHandler] addURLForRecent:documentURL];
 			[[UIMenuSystem mainSystem] setNeedsRebuild]; // Make sure this item will be part of recents
 		}
@@ -127,12 +127,12 @@ static __weak UIWindowScene* activeOnScene = nil;
 - (void)tryToRevealAndOpenDocumentAtURL:(NSURL *)documentURL
 {
 	 // If using Apple's recent menu, it seems we need to replace the document URL with the scoped one from the cache
+	/*
 	NSURL * bookmarkURL = [[RecentDocumentHandler sharedHandler] bookmarkedURLForURL:documentURL];
 	if (bookmarkURL)
 	{
 		documentURL = bookmarkURL;
 	}
-	/*
 	 */
 	if ([DocumentViewControllerManager activateExistingSceneWithURLIfOpen:documentURL])
 	{
