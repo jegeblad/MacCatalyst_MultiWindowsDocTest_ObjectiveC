@@ -157,8 +157,10 @@
 	[super viewDidAppear:animated];
 	self.documentNameLabel.text = self.document.fileURL.lastPathComponent;
 	self.view.window.windowScene.title = self.documentNameLabel.text;
+#if TARGET_OS_MACCATALYST
 	self.view.window.windowScene.titlebar.representedURL = self.document.fileURL;
-
+#endif
+	
 	[[DocumentViewControllerManager sharedManager] addDocumentVC:self];
 
 	// Set the user activity

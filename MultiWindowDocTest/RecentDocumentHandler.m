@@ -41,10 +41,15 @@ static NSString * bookmarkedURLSKey = @"bookmarkedurls";
 {
 	if (!url) { return nil; }
 	
+#if TARGET_OS_MACCATALYST
 	NSError * error = nil;
 	NSURLBookmarkCreationOptions options = NSURLBookmarkCreationWithSecurityScope | NSURLBookmarkCreationSecurityScopeAllowOnlyReadAccess;
 
 	return [url bookmarkDataWithOptions:options includingResourceValuesForKeys:nil relativeToURL:nil error:&error];
+#else
+	// Do nothing special on iOS
+	return [url dataRepresentation];
+#endif
 }
 
 
@@ -52,10 +57,15 @@ static NSString * bookmarkedURLSKey = @"bookmarkedurls";
 {
 	if (!bookmarkData) { return nil; }
 
+#if TARGET_OS_MACCATALYST
 	NSError * error = nil;
 	NSURL * url = [NSURL URLByResolvingBookmarkData:bookmarkData options:NSURLBookmarkResolutionWithSecurityScope relativeToURL:nil bookmarkDataIsStale:nil error:&error];
 
 	return url;
+#else
+	// Do nothing special on iOS
+	return [NSURL URLWithDataRepresentation:bookmarkData relativeToURL:nil];
+#endif
 }
 
 
@@ -91,8 +101,12 @@ static NSString * bookmarkedURLSKey = @"bookmarkedurls";
 	NSMutableArray * newRecents = [NSMutableArray arrayWithCapacity:kRecentMaxCount];
 	NSArray * oldRecents = [[NSUserDefaults standardUserDefaults] objectForKey:kRecentKey];
 
+#if TARGET_OS_MACCATALYST
 	NSURLBookmarkCreationOptions options = NSURLBookmarkCreationWithSecurityScope | NSURLBookmarkCreationSecurityScopeAllowOnlyReadAccess;
 	NSData * newData = [urlToAdd bookmarkDataWithOptions:options includingResourceValuesForKeys:nil relativeToURL:nil error:nil];
+#else
+	NSData * newData = [urlToAdd dataRepresentation];
+#endif
 	if (!newData)
 	{
 		return; // Not sure if this can happen
