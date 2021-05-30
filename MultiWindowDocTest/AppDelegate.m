@@ -210,7 +210,7 @@
 }
 
 
--(BOOL) respondsToSelector:(SEL)aSelector
+- (BOOL)canPerformAction:(SEL)aSelector withSender:(id)sender
 {
 	if (aSelector==@selector(onNewDocument))
 	{
@@ -228,7 +228,6 @@
 	
 	return [super respondsToSelector:aSelector];
 }
-
 
 
 @end
